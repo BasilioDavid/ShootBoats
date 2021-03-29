@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.tapestry:plastic:5.7.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tapestry/plastic/5.7.1/b3cfd86da93008bbbf585a5817049c67831bffbd/plastic-5.7.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tapestry/plastic/5.7.1/eb03984c577e943a1a2b65dbe065c02a34e9e276/plastic-5.7.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
