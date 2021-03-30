@@ -1,6 +1,6 @@
 package com.david.basilio.Dominio.Comportamientos;
 
-public class Movimiento {
+public class Moverse {
 	int posicionX, posicionY;
 	double velocidadX, velocidadY;
 	float velocidadMaxima;
@@ -9,8 +9,8 @@ public class Movimiento {
 	double velocidadMinimaParaParar;
 
 
-	public Movimiento(int posicionInicialX, int posicionInicialY, double velocidadInicialX, double velocidadInicialY,
-					  float velocidadMaxima, float factorMovimiento, float energiaUtil, double velocidadMinimaParaParar){
+	public Moverse(int posicionInicialX, int posicionInicialY, double velocidadInicialX, double velocidadInicialY,
+				   float velocidadMaxima, float factorMovimiento, float energiaUtil, double velocidadMinimaParaParar){
 		this.posicionX = posicionInicialX;
 		this.posicionY = posicionInicialY;
 		this.velocidadX = velocidadInicialX;

@@ -1,10 +1,10 @@
 package com.david.basilio.Dominio;
 
-import com.david.basilio.Dominio.Comportamientos.Movimiento;
+import com.david.basilio.Dominio.Comportamientos.Moverse;
 import com.david.basilio.Dominio.Habilidades.PowerUp;
 
 public class Barco extends GameObject{
-	private Movimiento movimiento;
+	private Moverse moverse;
 	private double vida;
 	private PowerUp powerUp;
 
@@ -16,7 +16,7 @@ public class Barco extends GameObject{
 
 	public Barco(Tipo tipo, int positionX, int positionY, float rotation, GameObjectManagerUser gameObjectManagerUser, double vidaInicial){
 		super(tipo, positionX, positionY, rotation, gameObjectManagerUser);
-		this.movimiento = new Movimiento(this.positionX, this.positionY, this.velocidadX, this.velocidadY, this.velocidadMaxima,
+		this.moverse = new Moverse(this.positionX, this.positionY, this.velocidadX, this.velocidadY, this.velocidadMaxima,
 				this.factorMovimiento, this.energiaUtil, this.velocidadMinimaParaParar);
 		this.vida = vidaInicial;
 	}
