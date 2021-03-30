@@ -1,5 +1,6 @@
 package com.david.basilio.Dominio;
 
+import com.david.basilio.Dominio.Comportamientos.Movimiento;
 import com.david.basilio.Dominio.Habilidades.PowerUp;
 
 public class Barco extends GameObject{
@@ -13,9 +14,9 @@ public class Barco extends GameObject{
 	float energiaUtil = .99f; // cuanta fuerza es la restante para simular la fuerza de rozamiento
 	double velocidadMinimaParaParar = .1;
 
-	public Barco(int positionX, int positionY, float rotation, GameObjectManagerUser gameObjectManagerUser, GameObject.Tipo tipo, double vidaInicial){
-		super(positionX, positionY, rotation, gameObjectManagerUser, tipo);
-		this.movimiento = new Movimiento(this.posicionX, this.posicionY, this.velocidadX, this.velocidadY, this.velocidadMaxima,
+	public Barco(Tipo tipo, int positionX, int positionY, float rotation, GameObjectManagerUser gameObjectManagerUser, double vidaInicial){
+		super(tipo, positionX, positionY, rotation, gameObjectManagerUser);
+		this.movimiento = new Movimiento(this.positionX, this.positionY, this.velocidadX, this.velocidadY, this.velocidadMaxima,
 				this.factorMovimiento, this.energiaUtil, this.velocidadMinimaParaParar);
 		this.vida = vidaInicial;
 	}
@@ -30,5 +31,13 @@ public class Barco extends GameObject{
 	}
 
 
+	@Override
+	public void update() {
+		// tiene que moverse
+	}
 
+	@Override
+	public void colliding(GameObject gameObjectToCompare) {
+		// tiene que ver con quien está colisionando
+	}
 }

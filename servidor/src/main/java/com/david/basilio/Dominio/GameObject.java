@@ -21,7 +21,7 @@ public abstract class GameObject {
 
     public abstract void update();
 
-    public abstract void colliding();
+    public abstract void colliding(GameObject gameObjectToCompare);
 
     public void die(){
 

@@ -1,4 +1,4 @@
-package com.david.basilio.Dominio;
+package com.david.basilio.Dominio.Comportamientos;
 
 public class Movimiento {
 	int posicionX, posicionY;

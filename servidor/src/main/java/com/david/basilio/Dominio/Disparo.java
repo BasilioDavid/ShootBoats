@@ -1,5 +1,7 @@
 package com.david.basilio.Dominio;
 
+import com.david.basilio.Dominio.Comportamientos.Movimiento;
+
 public abstract class Disparo extends GameObject {
 
     protected float segundosDeVida;
