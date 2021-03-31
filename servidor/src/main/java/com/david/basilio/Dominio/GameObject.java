@@ -24,6 +24,6 @@ public abstract class GameObject {
     public abstract void colliding(GameObject gameObjectToCompare);
 
     public void die(){
-
+        this.gameObjectManagerUser.eliminarGameObject(this);
     }
 }
