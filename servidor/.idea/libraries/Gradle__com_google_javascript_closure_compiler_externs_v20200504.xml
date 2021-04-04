@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: com.google.javascript:closure-compiler-externs:v20200504">
-    <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.javascript/closure-compiler-externs/v20200504/9a53bc88211546bed5093497ef36803beb05cf24/closure-compiler-externs-v20200504.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
