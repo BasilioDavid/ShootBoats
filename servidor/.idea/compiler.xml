@@ -11,7 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="servidor" target="1.8" />
-      <module name="ShootBoats" target="1.8" />
+      <module name="ShootBoats" target="14" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

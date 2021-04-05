@@ -1,50 +1,22 @@
 package com.david.basilio;
 
-// File Name GreetingServer.java
-import java.net.*;
-import java.io.*;
+import com.david.basilio.Connection.Connect;
+import com.david.basilio.Dominio.GameObjectFactory;
+import com.david.basilio.Dominio.Juego;
 
-public class Controller extends Thread {
-	private ServerSocket serverSocket;
+import java.io.IOException;
 
-	public Controller(int port) throws IOException {
-		serverSocket = new ServerSocket(port);
-		serverSocket.setSoTimeout(10000);
+public class Controller {
+	private Juego juego;
+	private Connect connect;
+
+	public Controller() throws IOException {
+		this.juego = new Juego();
+		this.connect = new Connect(1231);
 	}
 
-	public void run() {
-		while (true) {
-			try {
-				System.out.println("Waiting for client on port " +
-						serverSocket.getLocalPort() + "...");
-				Socket server = serverSocket.accept();
-
-				System.out.println("Just connected to " + server.getRemoteSocketAddress());
-				DataInputStream in = new DataInputStream(server.getInputStream());
-
-				System.out.println(in.readUTF());
-				DataOutputStream out = new DataOutputStream(server.getOutputStream());
-				out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress()
-						+ "\nGoodbye!");
-				server.close();
-
-			} catch (SocketTimeoutException s) {
-				System.out.println("Socket timed out!");
-				break;
-			} catch (IOException e) {
-				e.printStackTrace();
-				break;
-			}
-		}
+	public String nuevoJugador(){
+		this.juego.nuevoGameObject(GameObjectFactory.newBarco(10, 10, 0, this.juego, 5));
 	}
 
-	public static void main(String[] args) {
-		int port = Integer.parseInt(args[0]);
-		try {
-			Thread t = new Controller(port);
-			t.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }

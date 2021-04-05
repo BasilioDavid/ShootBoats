@@ -4,6 +4,8 @@ import com.david.basilio.Dominio.Comportamientos.Moverse;
 import com.david.basilio.Dominio.Habilidades.PowerUp;
 
 public class Barco extends GameObject{
+
+	private String playerID;
 	private Moverse moverse;
 	private double vida;
 	private PowerUp powerUp;
@@ -14,13 +16,14 @@ public class Barco extends GameObject{
 	float energiaUtil = .99f; // cuanta fuerza es la restante para simular la fuerza de rozamiento
 	double velocidadMinimaParaParar = .1;
 
-	public Barco(Tipo tipo, int positionX, int positionY, float rotation, GameObjectManagerUser gameObjectManagerUser, double vidaInicial){
+	public Barco(Tipo tipo, int positionX, int positionY, float rotation, GameObjectManagerUser gameObjectManagerUser,
+				 double vidaInicial, String playerID){
 		super(tipo, positionX, positionY, rotation, gameObjectManagerUser);
 		this.moverse = new Moverse(this.positionX, this.positionY, this.velocidadX, this.velocidadY, this.velocidadMaxima,
 				this.factorMovimiento, this.energiaUtil, this.velocidadMinimaParaParar);
 		this.vida = vidaInicial;
+		this.playerID = playerID;
 	}
-
 
 	public void nuevoPowerUp(PowerUp powerUp){
 		this.powerUp = powerUp;
