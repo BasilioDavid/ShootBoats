@@ -8,15 +8,15 @@ public abstract class GameObject {
 
     protected int positionX, positionY;
     protected float rotation;
-    protected GameObjectManagerUser gameObjectManagerUser;
+    protected JuegoManagerUser juegoManagerUser;
 
 
-    public GameObject(Tipo tipo, int positionX, int positionY, float rotation, GameObjectManagerUser gameObjectManagerUser) {
+    public GameObject(Tipo tipo, int positionX, int positionY, float rotation, JuegoManagerUser juegoManagerUser) {
         this.tipo = tipo;
         this.positionX = positionX;
         this.positionY = positionY;
         this.rotation = rotation;
-        this.gameObjectManagerUser = gameObjectManagerUser;
+        this.juegoManagerUser = juegoManagerUser;
     }
 
     public abstract void update();
@@ -24,6 +24,6 @@ public abstract class GameObject {
     public abstract void colliding(GameObject gameObjectToCompare);
 
     public void die(){
-        this.gameObjectManagerUser.eliminarGameObject(this);
+        this.juegoManagerUser.eliminarGameObject(this);
     }
 }

@@ -16,9 +16,9 @@ public class Barco extends GameObject{
 	float energiaUtil = .99f; // cuanta fuerza es la restante para simular la fuerza de rozamiento
 	double velocidadMinimaParaParar = .1;
 
-	public Barco(Tipo tipo, int positionX, int positionY, float rotation, GameObjectManagerUser gameObjectManagerUser,
+	public Barco(Tipo tipo, int positionX, int positionY, float rotation, JuegoManagerUser juegoManagerUser,
 				 double vidaInicial, String playerID){
-		super(tipo, positionX, positionY, rotation, gameObjectManagerUser);
+		super(tipo, positionX, positionY, rotation, juegoManagerUser);
 		this.moverse = new Moverse(this.positionX, this.positionY, this.velocidadX, this.velocidadY, this.velocidadMaxima,
 				this.factorMovimiento, this.energiaUtil, this.velocidadMinimaParaParar);
 		this.vida = vidaInicial;

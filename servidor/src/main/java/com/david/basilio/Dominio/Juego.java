@@ -2,11 +2,9 @@ package com.david.basilio.Dominio;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-public class Juego implements GameObjectManagerUser{
+public class Juego implements JuegoManagerUser, JuegoManagerAdmin {
 
 	private List<GameObject> objetosEnJuego = new ArrayList<>();
 
@@ -37,5 +35,18 @@ public class Juego implements GameObjectManagerUser{
 				this.objetosEnJuego.get(i).colliding(this.objetosEnJuego.get(j));
 			}
 		}
+	}
+
+	@Override
+	public synchronized String nuevoJugador(){
+		String playerID = this.generateID();
+		this.nuevoGameObject(GameObjectFactory.newBarco(10, 10, 0, this, 5, playerID));
+		System.out.println("Codigo del cliente" + playerID);
+		System.out.println(this.objetosEnJuego);
+		return playerID;
+	}
+
+	private String generateID(){
+		return String.valueOf(Math.random() * 10000000);
 	}
 }
