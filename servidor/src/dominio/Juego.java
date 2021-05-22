@@ -2,7 +2,7 @@ package dominio;
 
 
 import dominio.gameObjects.GameObject;
-import dominio.gameObjects.GameObjectFactory;
+import dominio.gameObjects.GameObjectDirector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,8 +34,11 @@ public class Juego implements JuegoManagerUser, JuegoManagerAdmin {
 		this.objetosEnJuego.forEach(GameObject::update);
 	}
 
-	// para optimizar el codigo abría que ordenar los objetos en dos listas, una respecto la posicion x y otra respecto la posicion y
-	// para que la evolución del algoritmo no sea exponencial, sino lineal
+	/**
+	 * Método que comprueba la colision entre todos los objetos del juego
+	 * El algoritmo utilizado tiene una tendencia exponencial, tema que en la fase mas early del juego no es un gran problema
+	 * pero en cuanto se empiecen a agregar elementos a la escena va a ser un gran cuello de botella
+	 */
 	public void colliding(){
 		for (int i = 0; i < this.objetosEnJuego.size(); i++){
 			for (int j = i + 1; j < this.objetosEnJuego.size(); j++){
@@ -44,22 +47,40 @@ public class Juego implements JuegoManagerUser, JuegoManagerAdmin {
 		}
 	}
 
+	/**
+	 * Método que crea un nuevo jugador
+	 * @return El nombre del jugador creado
+	 */
 	@Override
 	public synchronized String nuevoJugador(){
 		String playerID = this.generateID();
 		this.nuevoBarco(playerID);
-		System.out.println("Codigo del cliente" + playerID);
 		return playerID;
-	}
-
-	private void nuevoBarco(String playerID){
-		GameObject nuevo = GameObjectFactory.newBarco(10, 10, 0, this, 5, playerID);
-		this.nuevoGameObject(nuevo);
-		this.relaccionBarcoUserInputs.put(playerID, new UserInputs());
-		this.relaccionBarcoCodigo.put(playerID, nuevo);
 	}
 
 	private String generateID(){
 		return String.valueOf(Math.random() * 10000000);
 	}
+
+	private void nuevoBarco(String playerID){
+		GameObject nuevo = GameObjectDirector.newBarco(10, 10, 0, this, 5, playerID);
+		this.nuevoGameObject(nuevo);
+		this.relaccionBarcoUserInputs.put(playerID, new UserInputs());
+		this.relaccionBarcoCodigo.put(playerID, nuevo);
+	}
+
+	/**
+	 * Método que usa el método serialize() de los GameObjects para generar una cadena de todos los objetos en juego.
+	 * Si hay pocos elementos no creo que sea un gran problema de rendimiento,
+	 * pero si empiezan a haber muchos elementos esta clase tiene papeletas de ser un gran cuello de botella
+	 * @return Cadena separada por "," para los valores internos y con ";" para cada objeto
+	 */
+	public String getGameObjectsSerializados(){
+		StringBuilder stringBuilder = new StringBuilder();
+		for (GameObject gameObject : this.objetosEnJuego){
+			stringBuilder.append(gameObject.serialize()).append(";");
+		}
+		return stringBuilder.toString();
+	}
+
 }

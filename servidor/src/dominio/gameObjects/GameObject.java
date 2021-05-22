@@ -45,4 +45,9 @@ public abstract class GameObject {
     public JuegoManagerUser getJuegoManagerUser() {
         return juegoManagerUser;
     }
+
+    public String serialize(){
+        return this.tipoDeGameObject.name() + "," + this.positionX + "," + this.positionY;
+    }
+
 }

@@ -15,7 +15,14 @@ public class ConnectHandler extends Thread{
 	private JuegoManagerAdmin juegoManagerAdmin;
 	private AtomicBoolean trabajando = new AtomicBoolean();
 
-	// aqui tendría que poner los callbacks para todo
+	/**
+	 * Costructor de la clase con casi mas acoplamiento del que me gustaría
+	 * En un futuro estaría bien quipar el JuegoManagerAdmin, ya que con eso casamos esta clase a un solo juego
+	 * y cada cambio en en los metodo de esa clase posiblemente tenga que realizar cambios aquí
+	 * @param port puerto donde va a trabaja el manejador de conexiones
+	 * @param juegoManagerAdmin juego concreto sobre el que esta trabajando
+	 * @throws IOException en caso de no poder abrir el socket
+	 */
 	public ConnectHandler(int port, JuegoManagerAdmin juegoManagerAdmin) throws IOException {
 		super();
 		this.serverSocket = new ServerSocket(port);
@@ -23,7 +30,6 @@ public class ConnectHandler extends Thread{
 		this.juegoManagerAdmin = juegoManagerAdmin;
 	}
 
-//	public ConnectHandler(int port, CallbackVacio error, )
 
 	@Override
 	public void run() {
