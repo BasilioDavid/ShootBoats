@@ -1,0 +1,2 @@
+1- Comprobar como de viable hacer al menos 60 peticiones por segundo, una por cada cliente, en el servidor remoto
+

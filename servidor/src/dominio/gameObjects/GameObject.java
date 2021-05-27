@@ -4,10 +4,12 @@ import dominio.JuegoManagerUser;
 
 public abstract class GameObject {
     private final TipoDeGameObject tipoDeGameObject;
+    private static int contadorId = 0;
 
     private int positionX, positionY;
     private float rotation;
     private JuegoManagerUser juegoManagerUser;
+    private int id;
 
 
     public GameObject(TipoDeGameObject tipoDeGameObject, int positionX, int positionY, float rotation, JuegoManagerUser juegoManagerUser) {
@@ -16,6 +18,8 @@ public abstract class GameObject {
         this.positionY = positionY;
         this.rotation = rotation;
         this.juegoManagerUser = juegoManagerUser;
+        this.id = ++contadorId;
+        System.out.println("id del objeto " + this.id);
     }
 
     public abstract void update();
@@ -46,8 +50,16 @@ public abstract class GameObject {
         return juegoManagerUser;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String serialize(){
-        return this.tipoDeGameObject.name() + "," + this.positionX + "," + this.positionY;
+        return this.id + "," + this.tipoDeGameObject.name() + "," + this.positionX + "," + this.positionY;
     }
 
 }

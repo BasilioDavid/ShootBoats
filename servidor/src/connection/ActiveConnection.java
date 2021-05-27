@@ -23,6 +23,7 @@ public class ActiveConnection extends Thread{
 	public ActiveConnection(Socket client, JuegoManagerAdmin juegoManagerAdmin) {
 		super();
 		try{
+			long tiempoPeticion = System.currentTimeMillis();
 			this.conexionCliente = client;
 			this.juegoManagerAdmin = juegoManagerAdmin;
 			DataInputStream in = new DataInputStream(client.getInputStream());
@@ -32,6 +33,8 @@ public class ActiveConnection extends Thread{
 				case "ForceClose" -> this.closeAll();
 			}
 			this.conexionCliente.close();
+			tiempoPeticion = System.currentTimeMillis() - tiempoPeticion;
+			Souter.log(Souter.CODE_LOG, "Tiempo trancurrido en la peticion: " + tiempoPeticion + " ms");
 		} catch (IOException e) {
 			Souter.log(Souter.CODE_WARNING, "Conexion con el cliente " + this.conexionCliente.getInetAddress() + " ha fallado");
 		}
@@ -45,9 +48,9 @@ public class ActiveConnection extends Thread{
 
 	/**
 	 * Método que gestiona un tick de juego en una maquina
-	 * Primero la maquina da su "UserInputs" serializador
-	 * Luego envía la información de todos los objetos
-	 * Tras eso envía la información de la entrada del usuario al controlador Juego
+	 * Primero el cliente da su "UserInputs" serializado
+	 * Luego el servidor envía la información de todos los objetos a el cliente
+	 * Tras eso envía la información de la entrada del usuario al controlador de Juego para procesar la información
 	 */
 	private void gameTick(){
 //		try {
