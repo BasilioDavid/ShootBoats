@@ -1,0 +1,56 @@
+## Java
+
+*.class
+*.war
+*.ear
+hs_err_pid*
+
+## Robovm
+/cliente/ios/robovm-build/
+
+## GWT
+/cliente/html/war/
+/cliente/html/gwt-unitCache/
+/cliente/.apt_generated/
+/cliente/.gwt/
+/cliente/gwt-unitCache/
+/cliente/www-test/
+/cliente/.gwt-tmp/
+
+## Android Studio and Intellij and Android in general
+/cliente/android/libs/armeabi/
+/cliente/android/libs/armeabi-v7a/
+/cliente/android/libs/arm64-v8a/
+/cliente/android/libs/x86/
+/cliente/android/libs/x86_64/
+/cliente/android/gen/
+/cliente/.idea/
+/cliente/*.ipr
+/cliente/*.iws
+/cliente/*.iml
+/cliente/android/out/
+/cliente/com_crashlytics_export_strings.xml
+
+## Gradle
+
+/cliente/local.properties
+/cliente/.gradle/
+/cliente/gradle-app.setting
+/cliente/build/
+/cliente/android/build/
+/cliente/core/build/
+/cliente/desktop/build/
+/cliente/html/build/
+/cliente/ios/build/
+
+## OS Specific
+/cliente/.DS_Store
+/cliente/Thumbs.db
+
+## iOS
+#/ios/xcode/*.xcodeproj/*
+#!/ios/xcode/*.xcodeproj/xcshareddata
+#!/ios/xcode/*.xcodeproj/project.pbxproj
+#/ios/xcode/native/
+#/ios/IOSLauncher.app
+#/ios/IOSLauncher.app.dSYM
