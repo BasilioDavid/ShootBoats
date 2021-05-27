@@ -24,7 +24,7 @@ hs_err_pid*
 /cliente/android/libs/x86/
 /cliente/android/libs/x86_64/
 /cliente/android/gen/
-/cliente/.idea/
+#/cliente/.idea/
 /cliente/*.ipr
 /cliente/*.iws
 /cliente/*.iml
