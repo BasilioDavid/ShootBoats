@@ -14,6 +14,7 @@ public class ConnectHandler extends Thread{
 	private ServerSocket serverSocket;
 	private JuegoManagerAdmin juegoManagerAdmin;
 	private AtomicBoolean trabajando = new AtomicBoolean();
+	private AtomicBoolean crashGlobal;
 
 	/**
 	 * Costructor de la clase con casi mas acoplamiento del que me gustaría
@@ -23,8 +24,9 @@ public class ConnectHandler extends Thread{
 	 * @param juegoManagerAdmin juego concreto sobre el que esta trabajando
 	 * @throws IOException en caso de no poder abrir el socket
 	 */
-	public ConnectHandler(int port, JuegoManagerAdmin juegoManagerAdmin) throws IOException {
+	public ConnectHandler(int port, JuegoManagerAdmin juegoManagerAdmin, AtomicBoolean crashGlobal) throws IOException {
 		super();
+		this.crashGlobal = crashGlobal;
 		this.serverSocket = new ServerSocket(port);
 		this.serverSocket.setSoTimeout(0);
 		this.juegoManagerAdmin = juegoManagerAdmin;
@@ -35,13 +37,13 @@ public class ConnectHandler extends Thread{
 	public void run() {
 		Souter.log(Souter.CODE_LOG,"Socket Iniciado");
 		this.trabajando.set(true);
-		while (this.trabajando.get()) {
+		while (this.trabajando.get() && !this.crashGlobal.get()) {
 			try {
 				Souter.log(Souter.CODE_LOG, "Waiting for client on port " +
 						serverSocket.getLocalPort() + "...");
 				Socket client = serverSocket.accept();
 				Souter.log(Souter.CODE_LOG, "Conexion establecida con el cliente " + client.getInetAddress());
-				new ActiveConnection(client, juegoManagerAdmin).start();
+				new ActiveConnection(client, juegoManagerAdmin, this.crashGlobal).start();
 			} catch (SocketTimeoutException s) {
 				Souter.log(Souter.CODE_ERROR, "Socket timed out!");
 				break;

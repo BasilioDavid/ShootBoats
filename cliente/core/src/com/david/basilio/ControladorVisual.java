@@ -11,8 +11,8 @@ public class ControladorVisual extends Game {
     private final ControladorLogica controladorLogica;
 
     public ControladorVisual() {
-        this.INICIO = new PantallaInicio(this);
-        this.JUEGO = new PantallaJuego(this);
+        this.INICIO = new PantallaInicio();
+        this.JUEGO = new PantallaJuego();
         this.controladorLogica = new ControladorLogica();
     }
 

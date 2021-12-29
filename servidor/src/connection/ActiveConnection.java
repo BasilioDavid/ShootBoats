@@ -8,41 +8,58 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Clase que maneja las conexianes activas,
- * esta clase es invocada cada vez que se realiza una nueva conexion con un cliente
- * y muere cuando se termina la conexion con el mismo
+ * Clase que maneja una petición con un cliente en hilo concreto
+ * Esta clase siempre estará en uso hasta que el cliente falle, cierre la conexion o el controlador diga que se cierre
  * @author Basilio David Gómez Fernández
  */
 public class ActiveConnection extends Thread{
 
-	private Socket conexionCliente;
+	private Socket cliente;
 	private JuegoManagerAdmin juegoManagerAdmin;
+	private DataInputStream input;
+	private DataOutputStream output;
+	private AtomicBoolean crashGlobal;
 
-	public ActiveConnection(Socket client, JuegoManagerAdmin juegoManagerAdmin) {
+	public ActiveConnection(Socket client, JuegoManagerAdmin juegoManagerAdmin, AtomicBoolean crashGlobal) throws IOException {
 		super();
+		this.crashGlobal = crashGlobal;
+		this.cliente = client;
+		this.juegoManagerAdmin = juegoManagerAdmin;
 		try{
-			long tiempoPeticion = System.currentTimeMillis();
-			this.conexionCliente = client;
-			this.juegoManagerAdmin = juegoManagerAdmin;
-			DataInputStream in = new DataInputStream(client.getInputStream());
-			switch (in.readUTF()){
+			this.cargarIO();
+			this.esperarYManejarPeticion();
+		} catch (IOException e) {
+			Souter.log(Souter.CODE_WARNING, "Conexion con el cliente " + this.cliente.getInetAddress() + " ha fallado");
+			this.cliente.close();
+		}
+	}
+
+	public void cargarIO() throws IOException {
+		this.input = new DataInputStream(this.cliente.getInputStream());
+		this.output = new DataOutputStream(this.cliente.getOutputStream());
+	}
+
+	public void esperarYManejarPeticion() throws IOException {
+		while (!this.crashGlobal.get()){
+			switch (input.readUTF()){
 				case "Start" -> this.nuevaMaquina();
 				case "Tick" -> this.gameTick();
 				case "ForceClose" -> this.closeAll();
 			}
-			this.conexionCliente.close();
-			tiempoPeticion = System.currentTimeMillis() - tiempoPeticion;
-			Souter.log(Souter.CODE_LOG, "Tiempo trancurrido en la peticion: " + tiempoPeticion + " ms");
-		} catch (IOException e) {
-			Souter.log(Souter.CODE_WARNING, "Conexion con el cliente " + this.conexionCliente.getInetAddress() + " ha fallado");
 		}
+		this.cerrarConexion();
+	}
+
+	private void cerrarConexion() throws IOException {
+		this.cliente.close();
 	}
 
 	private void nuevaMaquina() throws IOException {
 		String playerID = this.juegoManagerAdmin.nuevoJugador();
-		DataOutputStream out = new DataOutputStream(this.conexionCliente.getOutputStream());
+		DataOutputStream out = new DataOutputStream(this.cliente.getOutputStream());
 		out.writeUTF(playerID);
 	}
 
@@ -66,10 +83,10 @@ public class ActiveConnection extends Thread{
 	 * queriendo o sin querer
 	 */
 	private void closeAll(){
-		Souter.log(Souter.CODE_WARNING, "El usuario " + this.conexionCliente.getInetAddress() + " está cerrando el servidor");
+		Souter.log(Souter.CODE_WARNING, "El usuario " + this.cliente.getInetAddress() + " está cerrando el servidor");
 		Souter.log(Souter.CODE_ERROR, "Cerrando el juego en modo DEBUG");
 		Souter.log(Souter.CODE_WARNING, "Cerrando el juego en modo DEBUG");
-		Controller.crash.set(true);
+		this.crashGlobal.set(true);
 	}
 
 //	System.out.println("Just connected to " + server.getRemoteSocketAddress());
